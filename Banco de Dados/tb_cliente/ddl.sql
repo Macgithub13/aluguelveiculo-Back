@@ -1,0 +1,22 @@
+Select 
+	NM_CLIENTE,
+    DS_EMAIL,
+    DS_TELEFONE,
+    DS_CPF,
+    NR_CNH
+from tb_cliente;
+
+Select 
+	NM_CLIENTE,
+    DS_EMAIL,
+    DS_TELEFONE,
+    DS_CPF,
+    NR_CNH
+from tb_cliente
+WHERE	NM_CLEINTE LIKE'%?%';
+
+INSERT INTO TB_CLIENTE(NM_CLIENTE,DS_EMAIL,DS_TELEFONE,DS_CPF,NR_CNH)
+			VALUES(?,?,?,?,?);
+            
+DELETE FROM TB_CLIENTE
+WHERE ID_CLIENTE=?;
