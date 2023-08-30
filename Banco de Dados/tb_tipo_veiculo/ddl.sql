@@ -1,0 +1,2 @@
+Select ID_TIPO_VEICULO,DS_TIPO_VEICULO
+	from tb_tipo_veiculo;
