@@ -27,7 +27,7 @@ export async function consultarClientes(){
     `;
 
     const [resp]= await connection.query(command, []);
-
+    console.log(resp);
     return (resp);
 }
 
