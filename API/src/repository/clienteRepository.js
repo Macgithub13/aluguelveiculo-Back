@@ -1,10 +1,10 @@
-import { connection } from './connection.js';
+import {connection} from './connection.js';
 
 export async function addCliente(cliente){
 
     let command = `
     
-    INSERT INTO tb_cliente(NM_CLIENTE,DS_EMAIL,DS_TELEFONE,DS_CPF,INT_CNH)
+    INSERT INTO tb_cliente(NM_CLIENTE,DS_EMAIL,DS_TELEFONE,DS_CPF,DS_CNH)
 		VALUES(?,?,?,?,?)
     `;
 
@@ -12,7 +12,7 @@ export async function addCliente(cliente){
     cliente.id=resp.insertId;
     return cliente;
 }
-
+ 
 export async function consultarClientes(){
 
     let command=`
@@ -22,12 +22,11 @@ export async function consultarClientes(){
         DS_EMAIL,
         DS_TELEFONE,
         DS_CPF,
-        INT_CNH
+        DS_CNH
     from tb_cliente
     `;
 
     const [resp]= await connection.query(command, []);
-    console.log(resp);
     return (resp);
 }
 
@@ -39,7 +38,7 @@ export async function consultarClientesNome(nome){
         DS_EMAIL,
         DS_TELEFONE,
         DS_CPF,
-        INT_CNH
+        DS_CNH
     from tb_cliente
     WHERE NM_CLIENTE like(?)`;
 

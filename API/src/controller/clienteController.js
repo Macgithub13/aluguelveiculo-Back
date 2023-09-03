@@ -3,28 +3,29 @@ import { addCliente, consultarClientes, consultarClientesNome, deletarCliente, v
 
 const server=Router();
 
-const tabela=await consultarClientes();
-
 server.post('/locadora/cliente', async (req,resp) => {
 
     try{
 
         const cliente=req.body;
-        const resposta=await addCliente(cliente);
+        
+        const tabela= await consultarClientes();
 
         // Verificação se o CPF ou email já está cadastrado
         for(let item of tabela){
 
-            if(resposta.cpf===item.DS_CPF){
+            if(cliente.cpf===item.DS_CPF){
 
                 throw new Error('Este CPF já está cadastrado em nosso sistema');
             }
 
-            else if(resposta.email===item.DS_EMAIL){
+            else if(cliente.email===item.DS_EMAIL){
 
                 throw new Error('Este email já está cadastrado em nosso sistema')
             }
         }
+
+        const resposta=await addCliente(cliente);
         resp.send(resposta);
     }
 
