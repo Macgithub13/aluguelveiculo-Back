@@ -54,16 +54,24 @@ export async function deletarCliente(id){
 
     const [resp]= await connection.query(command, [id]);
 
-    return(resp);
+    return resp.affectedRows;
 }
 
-export async function verifCliente(id){
+export async function alterarCliente(cliente,id){
 
-    let command=`Select * from TB_CLIENTE
-                WHERE ID_CLIENTE=?`;
+    let command=`
+    
+        Update TB_CLIENTE
+        Set NM_CLIENTE=?,
+            DS_EMAIL=?,
+            DS_TELEFONE=?,
+            DS_CPF=?,
+            DS_CNH=?
+        WHERE ID_CLIENTE=?
+    `
 
-    const [resp]=await connection.query(command,[id]);
+    const [resp]=await connection.query(command, [cliente.nome,cliente.email,cliente.telefone,cliente.cpf,cliente.cnh,id]);
 
-    return(resp);
+    return (resp);
 }
 

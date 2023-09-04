@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { addCliente, consultarClientes, consultarClientesNome, deletarCliente, verifCliente } from '../repository/clienteRepository.js';
+import { addCliente, consultarClientes, consultarClientesNome, deletarCliente, alterarCliente } from '../repository/clienteRepository.js';
 
 const server=Router();
 
@@ -79,10 +79,15 @@ server.delete('/locadora/cliente/:id', async (req,resp) => {
     try{
 
         const id=req.params.id;
+        
         const resposta=await deletarCliente(id);
 
-        
-        resp.send(`O cliente ${id} foi deletado dos registros`);
+        if(resposta==0){
+
+            throw new Error('Esse cliente não está registrado');
+        }
+
+        resp.status(204).send();
     }
 
     catch(err){
@@ -93,4 +98,29 @@ server.delete('/locadora/cliente/:id', async (req,resp) => {
         });
     }
 });
+
+server.put('/locadora/cliente/:id', async (req,resp) => {
+
+    try{
+
+        const id=req.params.id
+        const cliente=req.body;
+
+        const resposta=await alterarCliente(cliente,id);
+
+        if(resposta.affectedRows==0){
+
+            throw new Error('Esse cliente não está registrado');
+        }
+
+        resp.status(204).send('');
+    }
+
+    catch(err){
+
+        resp.status(404).send({
+            erro:err.message
+    })};
+});
+
 export default server;
